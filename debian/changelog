@@ -1,3 +1,13 @@
+grub2 (2.02~beta3-3+imx1) unstable; urgency=medium
+
+  * find zImages with mkconfig too
+  * ask u-boot for fdt (probably bad idea, should be part of mkconfig)
+  * Do not require gcc-6
+  * do not force non-pie build
+  * look for system-provided dtb in mkconfig
+
+ -- Josua Mayer <josua@linux-bpjl.fritz.box>  Thu, 24 Nov 2016 12:45:21 +0100
+
 grub2 (2.02~beta3-3) unstable; urgency=medium
 
   [ Chad MILLER ]
