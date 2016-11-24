@@ -1,0 +1,33 @@
+From 2a36cece32e4b967d164f974b5b5740cfa0375e1 Mon Sep 17 00:00:00 2001
+From: Alexander Graf <agraf@suse.de>
+Date: Mon, 4 Jan 2016 22:05:55 +0100
+Subject: [PATCH 2/2] arm efi: Use fdt from firmware when available
+
+If EFI is nice enough to pass us an FDT using configuration tables on 32bit
+ARM, we should really try and make use of it.
+
+Signed-off-by: Alexander Graf <agraf@suse.de>
+---
+ include/grub/arm/linux.h | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
+
+diff --git a/include/grub/arm/linux.h b/include/grub/arm/linux.h
+index 059dbba..a66caad 100644
+--- a/include/grub/arm/linux.h
++++ b/include/grub/arm/linux.h
+@@ -40,11 +40,7 @@
+ # define LINUX_PHYS_OFFSET        (0x00008000)
+ # define LINUX_INITRD_PHYS_OFFSET (LINUX_PHYS_OFFSET + 0x02000000)
+ # define LINUX_FDT_PHYS_OFFSET    (LINUX_INITRD_PHYS_OFFSET - 0x10000)
+-static inline grub_addr_t
+-grub_arm_firmware_get_boot_data (void)
+-{
+-  return 0;
+-}
++# define grub_arm_firmware_get_boot_data (grub_addr_t)grub_efi_get_firmware_fdt
+ static inline grub_uint32_t
+ grub_arm_firmware_get_machine_type (void)
+ {
+-- 
+2.7.1
+
