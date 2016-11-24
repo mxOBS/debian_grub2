@@ -183,6 +183,18 @@ EOF
 	linux	${rel_dirname}/${basename} root=${linux_root_device_thisversion} ro ${args}
 EOF
   fi
+  if test -n "${fdtfile}" ; then
+    # TRANSLATORS: ramdisk isn't identifier. Should be translated.
+    if [ x"$quiet_boot" = x0 ] || [ x"$type" != xsimple ]; then
+      message="$(gettext_printf "Loading devicetree blob ...")"
+      sed "s/^/$submenu_indentation/" << EOF
+	echo	'$(echo "$message" | grub_quote)'
+EOF
+    fi
+    sed "s/^/$submenu_indentation/" << EOF
+	devicetree ${rel_dirname}/${fdtfile}
+EOF
+  fi
   if test -n "${initrd}" ; then
     # TRANSLATORS: ramdisk isn't identifier. Should be translated.
     if [ x"$quiet_boot" = x0 ] || [ x"$type" != xsimple ]; then
@@ -298,6 +310,19 @@ while [ "x$list" != "x" ] ; do
   version=`echo $basename | sed -e "s,^[^0-9]*-,,g"`
   alt_version=`echo $version | sed -e "s,\.old$,,g"`
   linux_root_device_thisversion="${LINUX_ROOT_DEVICE}"
+  fdtmodel=`cat /sys/firmware/devicetree/base/model 2>/dev/null` || :
+  fdtname=
+  case $fdtmodel in
+    "SolidRun Clearfog Pro A1") fdtname=armada-388-clearfog-pro.dtb ;;
+  esac
+  fdtfile=
+  if [ -n "$fdtname" ]; then
+    test -e "$dirname/dtb-$version/$fdtname" && fdtfile="dtb-$version/$fdtname"
+    test -e "$dirname/$fdtname" && fdtfile="$fdtname"
+  fi
+  if [ -n "$fdtfile" ]; then
+    gettext_printf "Found devicetree blob: %s\n" "$fdtfile" >&2
+  fi
 
   initrd=
   for i in "initrd.img-${version}" "initrd-${version}.img" "initrd-${version}.gz" \

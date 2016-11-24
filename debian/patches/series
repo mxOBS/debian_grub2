@@ -59,3 +59,4 @@ efinet_set_dns_from_uefi_proto.patch
 mkconfig-arm.patch
 arm-efi-Use-fdt-from-firmware-when-available.patch
 arm64-Move-firmware-fdt-search-into-global-function.patch
+findfdt.patch
