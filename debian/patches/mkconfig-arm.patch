@@ -1,0 +1,13 @@
+--- a/util/grub.d/10_linux.in
++++ b/util/grub.d/10_linux.in
+@@ -207,6 +207,10 @@
+ 	for i in /boot/vmlinuz-* /vmlinuz-* /boot/kernel-* ; do
+ 	    if grub_file_is_not_garbage "$i" ; then list="$list $i" ; fi
+ 	done ;;
++    xarm*)
++	list=`for i in /boot/zImage-* /zImage-* /boot/kernel-* ; do
++	    if grub_file_is_not_garbage "$i" ; then echo -n "$i " ; fi
++	done` ;;
+     *) 
+ 	list=
+ 	for i in /boot/vmlinuz-* /boot/vmlinux-* /vmlinuz-* /vmlinux-* /boot/kernel-* ; do
