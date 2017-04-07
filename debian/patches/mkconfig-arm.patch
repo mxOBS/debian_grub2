@@ -1,11 +1,13 @@
+diff --git a/util/grub.d/10_linux.in b/util/grub.d/10_linux.in
+index f7de2e1c5..f96c69d9f 100644
 --- a/util/grub.d/10_linux.in
 +++ b/util/grub.d/10_linux.in
-@@ -207,6 +207,10 @@
+@@ -207,6 +207,10 @@ case "x$machine" in
  	for i in /boot/vmlinuz-* /vmlinuz-* /boot/kernel-* ; do
  	    if grub_file_is_not_garbage "$i" ; then list="$list $i" ; fi
  	done ;;
 +    xarm*)
-+	list=`for i in /boot/zImage-* /zImage-* /boot/kernel-* ; do
++	list=`for i in /boot/zImage-* /zImage-* /boot/Image-* /Image-* /boot/kernel-* ; do
 +	    if grub_file_is_not_garbage "$i" ; then echo -n "$i " ; fi
 +	done` ;;
      *) 
